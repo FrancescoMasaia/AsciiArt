@@ -28,7 +28,8 @@ def Ascii(im,pix):
         for j in range(im.size[0]):
             gradient=0
             for k in range(-2,1):
-                gradient=gradient/3
+                gradient=gradient+pix[j,i+k][0]
+            gradient=gradient/3
             if(gradient>=0 and gradient<25):
                 buffer+=SCALE[0]
             if(gradient>=25 and gradient<50):
