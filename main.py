@@ -10,6 +10,7 @@ SCALE=[   '.',
     'F',
     'E',
     '$']
+
 def GrayScale(image,im):
     pix=im.load()
     for i in range(im.size[0]):
@@ -22,14 +23,15 @@ def GrayScale(image,im):
     im.save(image.split(".")[0]+"_grayscale.jpg")
     return pix
 
-def Ascii(im,pix):
+def Ascii(im,pix,scale=1):
     buffer=""
-    for i in range(2,im.size[1],4):
-        for j in range(im.size[0]):
+    for i in range(2*scale,im.size[1],4*scale):
+        for j in range(scale,im.size[0],2*scale):
             gradient=0
-            for k in range(-2,1):
-                gradient=gradient+pix[j,i+k][0]
-            gradient=gradient/3
+            for k in range(-2*scale,1*scale):
+                for l in range(-scale,scale):
+                    gradient=gradient+pix[j+l,i+k][0]
+            gradient=gradient/(6*scale*scale)
             if(gradient>=0 and gradient<25):
                 buffer+=SCALE[0]
             if(gradient>=25 and gradient<50):
@@ -53,10 +55,15 @@ def Ascii(im,pix):
         buffer+="\n"
     return buffer
 
-image=str(sys.argv[1])
-im=Image.open(image)
-file=open(image.split(".")[0]+".txt","w")
-pix=GrayScale(image,im)
+def main():
+    image=str(sys.argv[1])
+    scale=int(sys.argv[2])
+    im=Image.open(image)
+    file=open(image.split(".")[0]+".txt","w")
+    pix=GrayScale(image,im)
 
-file.write(Ascii(im,pix))
-file.close()
+    file.write(Ascii(im,pix,scale))
+    file.close()
+
+if __name__ == "__main__":
+   main()
