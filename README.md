@@ -1,5 +1,5 @@
 # AsciiArt
-A simple python 3 script that convert an on pixelated image to an **AWESOME** ASCII Art
+A simple python 3 script that convert any image to an **AWESOME** ASCII Art
 
 ## How to use it
 **python main.py** *\<filepath> \<scale>*  
